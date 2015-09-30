@@ -1,12 +1,15 @@
 package org.teamblackbox.routetracker;
 
 import android.location.Location;
-import android.support.v4.app.FragmentActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.drive.Drive;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -16,18 +19,23 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements
+public class MapsFragment extends Fragment implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private GoogleApiClient mGoogleApiClient;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_maps,container,false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         setUpMapIfNeeded();
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -35,14 +43,14 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         setUpMapIfNeeded();
         mGoogleApiClient.connect();
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
@@ -77,7 +85,7 @@ public class MapsActivity extends FragmentActivity implements
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+            mMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map))
                     .getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {

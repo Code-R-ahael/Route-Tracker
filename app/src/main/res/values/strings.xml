@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Route Tracker</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_main">Route Tracker</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="openDrawer">Open Drawer</string>
+    <string name="closeDrawer">Close Drawer</string>
+    <string name="action_settings">Settings</string>
 </resources>

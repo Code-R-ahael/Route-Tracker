@@ -3,13 +3,13 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/inbox"
+            android:id="@+id/save"
             android:checked="false"
             android:icon="@mipmap/ic_launcher"
             android:title="Save" />
 
         <item
-            android:id="@+id/starred"
+            android:id="@+id/replay"
             android:checked="false"
             android:icon="@mipmap/ic_launcher"
             android:title="Replay" />
